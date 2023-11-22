@@ -4,9 +4,9 @@ from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
-class Patient(Base):
-    __tablename__ = 'patients'
+class Administrator(Base):
+    __tablename__ = 'administrators'
 
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
 
-    user = relationship("User", back_populates="patient")
+    user = relationship("User", back_populates="administrator")

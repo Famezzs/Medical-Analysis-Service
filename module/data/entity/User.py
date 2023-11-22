@@ -10,7 +10,7 @@ class User(declarative_base()):
     birthday = Column(Date)
     sex = Column(String)
 
-    # Relationships
     patient = relationship("Patient", uselist=False, back_populates="user")
     doctor = relationship("Doctor", uselist=False, back_populates="user")
+    administrator = relationship("Administrator", uselist=False, back_populates="user")
     login_details = relationship("LoginDetails", uselist=False, back_populates="user")

@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
-from module.static.DatabaseConfiguration import DatabaseConfiguration
+from module.static.dedicated_configuration.DatabaseConfiguration import DatabaseConfiguration
 
 class DatabaseEngine:
     def __init__(self, configuration: DatabaseConfiguration):

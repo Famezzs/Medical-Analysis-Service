@@ -9,5 +9,4 @@ class Doctor(Base):
 
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
 
-    # Relationship to User
     user = relationship("User", back_populates="doctor")
