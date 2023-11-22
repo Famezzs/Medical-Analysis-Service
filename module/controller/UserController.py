@@ -41,3 +41,7 @@ class UserController(Controller):
     def create_login_details(self, login_details: LoginDetails):
         self.__enforce_type(login_details, LoginDetails)
         self.database.add_record(login_details)
+
+    def get_login_details(self, login: str):
+        self.__enforce_type(login, str)
+        self.database.query_records(LoginDetails, LoginDetails.login == login)
