@@ -1,14 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
-from module.static.dedicated_configuration.DatabaseConfiguration import DatabaseConfiguration
+from module.static.Configuration import Configuration
 
 class DatabaseEngine:
-    def __init__(self, configuration: DatabaseConfiguration):
-        self.engine = create_engine(configuration.connection_string)
+    def __init__(self, configuration: Configuration):
+        self.engine = create_engine(configuration.database_configuration.connection_string)
         self.session = sessionmaker(bind=self.engine)
-        self.printer = configuration.printer
-        self.create_all_tables(configuration.entities)
+        self.printer = configuration.database_configuration.printer
+        self.create_all_tables(configuration.database_configuration.entities)
 
     def create_all_tables(self, entities):
         for entity in entities:

@@ -1,8 +1,8 @@
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.orm import relationship
+from module.static.dedicated_configuration.EntityConfiguration import EntityConfiguration
 
-class User(declarative_base()):
+class User(EntityConfiguration.base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)

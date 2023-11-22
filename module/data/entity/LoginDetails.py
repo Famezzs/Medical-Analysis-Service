@@ -1,10 +1,8 @@
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
+from module.static.dedicated_configuration.EntityConfiguration import EntityConfiguration
 
-Base = declarative_base()
-
-class LoginDetails(Base):
+class LoginDetails(EntityConfiguration.base):
     __tablename__ = 'login_details'
 
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)

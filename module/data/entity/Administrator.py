@@ -1,10 +1,8 @@
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
+from module.static.dedicated_configuration.EntityConfiguration import EntityConfiguration
 
-Base = declarative_base()
-
-class Administrator(Base):
+class Administrator(EntityConfiguration.base):
     __tablename__ = 'administrators'
 
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
