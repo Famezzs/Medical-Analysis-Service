@@ -1,5 +1,4 @@
 from module.abstract.Controller import Controller
-from module.controller.UserController import UserController
 from module.exception.Unauthorized import Unauthorized
 from module.static.Configuration import Configuration
 from module.data.entity.User import User
@@ -14,6 +13,7 @@ class AuthenticationController(Controller):
         self.configuration = configuration
 
     def __get_login_details(self, login: str):
+        from module.controller.UserController import UserController
         user_controller = UserController(self.configuration)
         stored_login_details = user_controller.get_login_details(login)
         if stored_login_details == None:
@@ -36,9 +36,10 @@ class AuthenticationController(Controller):
             raise Unauthorized('Unauthorized')
         
     def register_user(self, user: User, login_details: LoginDetails):
+        from module.controller.UserController import UserController
         user_controller = UserController(self.configuration)
-        user_controller.create_user(user)
         login_details.password = self.hash_password(login_details.password)
+        login_details.user_id = user_controller.create_user(user)
         user_controller.create_login_details(login_details)
     
     def authenticate_user(self, login_details: LoginDetails):

@@ -4,8 +4,8 @@ from module.static.dedicated_configuration.EntityConfiguration import EntityConf
 
 class User(EntityConfiguration.base):
     __tablename__ = 'users'
-
-    id = Column(Integer, primary_key=True)
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     birthday = Column(Date)
     sex = Column(String)

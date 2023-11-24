@@ -5,8 +5,9 @@ from module.static.dedicated_configuration.EntityConfiguration import EntityConf
 class LoginDetails(EntityConfiguration.base):
     __tablename__ = 'login_details'
 
+    id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
     login = Column(String)
     password = Column(String)
 
-    user = relationship("User", back_populates="login_detail")
+    user = relationship("User", back_populates="login_details")

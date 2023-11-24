@@ -1,5 +1,4 @@
 from module.abstract.Controller import Controller
-from module.controller.AuthenticationController import AuthenticationController
 from module.static.Configuration import Configuration
 from module.data.DatabaseEngine import DatabaseEngine
 from module.data.entity.User import User
@@ -26,13 +25,14 @@ class UserController(Controller):
 
     def create_user(self, user: User):
         self.__enforce_type(user, User)
-        self.database.add_record(user)
+        return self.database.add_record(user)
 
     def create_patient(self, patient: Patient):
         self.__enforce_type(patient, Patient)
         self.database.add_record(patient)
 
     def create_doctor(self, doctor: Doctor):
+        from module.controller.AuthenticationController import AuthenticationController
         self.__enforce_type(doctor, Doctor)
         AuthenticationController.ensure_authenticated()
         self.__is_user_administrator(AuthenticationController.get_current_session())
@@ -44,4 +44,4 @@ class UserController(Controller):
 
     def get_login_details(self, login: str):
         self.__enforce_type(login, str)
-        self.database.query_records(LoginDetails, LoginDetails.login == login)
+        return self.database.query_records(LoginDetails, LoginDetails.login == login)

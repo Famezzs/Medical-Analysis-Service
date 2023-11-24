@@ -18,8 +18,10 @@ class DatabaseEngine:
         session = self.session()
         try:
             session.add(record)
+            session.flush()
+            record_id = record.id
             session.commit()
-            return True
+            return record_id 
         except SQLAlchemyError as e:
             session.rollback()
             self.printer.print(f"Error adding record: {e}", True)

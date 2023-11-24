@@ -7,3 +7,5 @@ class ExceptionHandler:
     def handle(self, exception):
         self.printer.clear_console()
         self.printer.print(exception, True)
+        input('Press Enter to continue...')
+        self.printer.clear_console()

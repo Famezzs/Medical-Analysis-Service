@@ -5,6 +5,7 @@ from module.static.dedicated_configuration.EntityConfiguration import EntityConf
 class Doctor(EntityConfiguration.base):
     __tablename__ = 'doctors'
 
+    id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
 
     user = relationship("User", back_populates="doctor")
