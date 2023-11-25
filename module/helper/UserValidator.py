@@ -4,6 +4,7 @@ from module.data.entity.User import User
 from module.InputScanner import InputScanner
 from module.exception.EmptyInput import EmptyInput
 from module.exception.InvalidInput import InvalidInput
+from datetime import datetime
 
 class UserValidator(Validator):
     def validate(self, user: User):

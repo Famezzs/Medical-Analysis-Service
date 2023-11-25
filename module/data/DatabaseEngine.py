@@ -32,10 +32,7 @@ class DatabaseEngine:
     def query_records(self, model, filter_condition=None):
         session = self.session()
         try:
-            if filter_condition:
-                return session.query(model).filter(filter_condition).all()
-            else:
-                return session.query(model).all()
+            return session.query(model).filter(filter_condition).all()
         except SQLAlchemyError as e:
             self.printer.print(f"Error querying records: {e}", True)
             return []
