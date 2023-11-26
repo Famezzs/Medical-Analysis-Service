@@ -7,6 +7,7 @@ import bcrypt
 
 class AuthenticationController(Controller):
     __current_session = None
+    __is_doctor = False
     
     def __init__(self, configuration):
         self.configuration = configuration
@@ -39,6 +40,16 @@ class AuthenticationController(Controller):
         match = self.__check_password(stored_login_details.password, provided_login_details.password)
         if match == False:
             raise LoginFailed('Login failed')
+
+    @staticmethod    
+    def __determine_is_doctor():
+        from module.controller.UserController import UserController
+        from module.static.Configuration import Configuration
+        user_controller = UserController(Configuration)
+        if user_controller.get_doctor(AuthenticationController.__current_session.user_id):
+            return True
+        else:
+            return False
         
     @staticmethod
     def __handle_unauthorized():
@@ -59,22 +70,11 @@ class AuthenticationController(Controller):
         
     @staticmethod
     def is_doctor():
-        if AuthenticationController.is_authenticated() == False:
-            return False
-        from module.controller.UserController import UserController
-        from module.static.Configuration import Configuration
-        user_controller = UserController(Configuration)
-        if user_controller.get_doctor(AuthenticationController.__current_session.user_id):
-            return True
-        else:
-            return False
+        return AuthenticationController.__is_doctor
 
     @staticmethod
     def ensure_doctor():
-        from module.controller.UserController import UserController
-        from module.static.Configuration import Configuration
-        user_controller = UserController(Configuration)
-        if AuthenticationController.is_authenticated() == False or not user_controller.get_doctor(AuthenticationController.__current_session.user_id):
+        if AuthenticationController.__determine_is_doctor() == False:
             AuthenticationController.__handle_unauthorized()
 
     def register_user(self, user: User, login_details: LoginDetails):
@@ -88,6 +88,9 @@ class AuthenticationController(Controller):
         stored_login_details = self.__get_login_details(login_details.login)[0]
         self.__compare_login_details(stored_login_details, login_details)
         AuthenticationController.__current_session = stored_login_details
+        if AuthenticationController.__determine_is_doctor() == True:
+            AuthenticationController.__is_doctor = True
     
     def logout_user(self):
         AuthenticationController.__current_session = None
+        AuthenticationController.__is_doctor = False

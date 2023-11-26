@@ -7,6 +7,7 @@ class MenuConfiguration:
         '1': MenuFunctions.register,
         '2': MenuFunctions.login,
         '3': MenuFunctions.logout,
+        '5': MenuFunctions.create_illness,
         '0': MenuFunctions.exit_program
     }
 

@@ -27,7 +27,7 @@ class LoginDetailsValidator(Validator):
             return False
         return True
 
-    def validate(self, login_details: LoginDetails, validate_exists = False):
+    def validate(self, login_details: LoginDetails, validate_not_exists = False):
         from module.controller.UserController import UserController
         if InputScanner.input_empty(login_details.login):
             raise InvalidInput('Login cannot be empty or whitespace')
@@ -37,7 +37,7 @@ class LoginDetailsValidator(Validator):
             raise InvalidInput('Login must contain more than 5 characters')
         if self.__check_password_secure(login_details.password) == False:
             raise InvalidInput('Password must contain more than 7 characters, have at least one uppercase letter, and have at least one symbol')
-        if validate_exists:
+        if validate_not_exists:
             user_controller = UserController(self.configuration)
             if user_controller.get_login_details(login_details.login):
                 raise InvalidInput('User with this login already exists')
