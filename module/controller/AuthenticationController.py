@@ -30,7 +30,7 @@ class AuthenticationController(Controller):
         from module.controller.UserController import UserController
         user_controller = UserController(self.configuration)
         stored_login_details = user_controller.get_login_details(login)
-        if stored_login_details == None:
+        if not stored_login_details:
             raise LoginFailed('Login failed')
         else:
             return stored_login_details
@@ -39,19 +39,43 @@ class AuthenticationController(Controller):
         match = self.__check_password(stored_login_details.password, provided_login_details.password)
         if match == False:
             raise LoginFailed('Login failed')
+        
+    @staticmethod
+    def __handle_unauthorized():
+        raise Unauthorized('You are unauthorized to perform this action')
 
     @staticmethod
     def get_current_session():
         return AuthenticationController.__current_session
     
     @staticmethod
-    def ensure_authenticated():
-        if AuthenticationController.__current_session == None:
-            raise Unauthorized('Unauthorized')
-        
-    @staticmethod
     def is_authenticated():
         return AuthenticationController.__current_session != None
+    
+    @staticmethod
+    def ensure_authenticated():
+        if AuthenticationController.__current_session == None:
+            AuthenticationController.__handle_unauthorized()
+        
+    @staticmethod
+    def is_doctor():
+        if AuthenticationController.is_authenticated() == False:
+            return False
+        from module.controller.UserController import UserController
+        from module.static.Configuration import Configuration
+        user_controller = UserController(Configuration)
+        if user_controller.get_doctor(AuthenticationController.__current_session.user_id):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def ensure_doctor():
+        from module.controller.UserController import UserController
+        from module.static.Configuration import Configuration
+        user_controller = UserController(Configuration)
+        if AuthenticationController.is_authenticated() == False or not user_controller.get_doctor(AuthenticationController.__current_session.user_id):
+            AuthenticationController.__handle_unauthorized()
 
     def register_user(self, user: User, login_details: LoginDetails):
         from module.controller.UserController import UserController

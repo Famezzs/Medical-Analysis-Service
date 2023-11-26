@@ -14,6 +14,7 @@ class MenuConfiguration:
         '1': 'Register',
         '2': 'Log In',
         '3': 'Log Out',
+        '5': 'Create Illness',
         '0': 'Exit'
     }
 
@@ -21,6 +22,7 @@ class MenuConfiguration:
         '1': lambda: __import__('module.controller.AuthenticationController', fromlist=['AuthenticationController']).AuthenticationController.is_authenticated() == False,
         '2': lambda: __import__('module.controller.AuthenticationController', fromlist=['AuthenticationController']).AuthenticationController.is_authenticated() == False,
         '3': lambda: __import__('module.controller.AuthenticationController', fromlist=['AuthenticationController']).AuthenticationController.is_authenticated() == True,
+        '5': lambda: __import__('module.controller.AuthenticationController', fromlist=['AuthenticationController']).AuthenticationController.is_doctor() == True,
         '0': lambda: True
     }
 
