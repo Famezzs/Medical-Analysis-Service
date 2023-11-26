@@ -4,8 +4,11 @@ from termcolor import colored
 
 class OutputPrinter(ClearsConsole):
     @staticmethod
-    def print(output_string, additional_next_line=False):
-        print(output_string)
+    def print(output_string, additional_next_line=False, no_new_line=False):
+        if no_new_line == True:
+            print(output_string, end='')
+        else:
+            print(output_string)
         if additional_next_line == True:
             print()
 

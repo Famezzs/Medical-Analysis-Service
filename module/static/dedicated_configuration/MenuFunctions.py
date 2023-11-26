@@ -6,6 +6,7 @@ from module.data.entity.LoginDetails import LoginDetails
 from module.data.entity.Illness import Illness
 from module.helper.UserValidator import UserValidator
 from module.helper.IllnessValidator import IllnessValidator
+from module.helper.IllnessesValidator import IllnessesValidator
 from module.helper.LoginDetailsValidator import LoginDetailsValidator
 from module.controller.AuthenticationController import AuthenticationController
 from module.controller.IllnessController import IllnessController
@@ -42,6 +43,43 @@ class MenuFunctions:
         illness = Illness(); illness.name = name; illness.description = description
         illness_validator = IllnessValidator(Configuration); illness_validator.validate(illness, validate_not_exists, validate_description_changed)
         return illness
+    
+    @staticmethod
+    def __print_illnesses_names(illnesses: list):
+        OutputPrinter.print('Available illnesses:')
+        size_of_illnesses_list = len(illnesses)
+        for i in range(size_of_illnesses_list):
+            if i < size_of_illnesses_list - 1:
+                OutputPrinter.print(illnesses[i].name + ', ', False, True)
+            else:
+                OutputPrinter.print(illnesses[i].name, True)
+
+    @staticmethod
+    def __get_illnesses():
+        input_scanner = InputScanner(OutputPrinter)
+        illnesses = input_scanner.scan('Illnesses for analysis (enter a comma separated list): ')
+        illnesses_validator = IllnessesValidator(); illnesses_validator.validate(illnesses)
+        return illnesses
+    
+    @staticmethod
+    def __illnesses_string_to_list(illnesses: str):
+        illnesses_list = illnesses.split(',')
+        for i in range(len(illnesses_list)):
+            illnesses_list[i] = illnesses_list[i].strip()
+        return illnesses_list
+    
+    @staticmethod
+    def __output_analysis(illnesses: list):
+        if illnesses:
+            for illness in illnesses:
+                OutputPrinter.print(illness.name)
+                OutputPrinter.print(illness.description, True)
+        else:
+            OutputPrinter.print('No records found')
+
+    @staticmethod
+    def __await_user_input():
+        input('Press Enter to continue...')
 
     @staticmethod
     def register():
@@ -80,6 +118,20 @@ class MenuFunctions:
         illness = MenuFunctions.__get_illness(False, True)
         OutputPrinter.clear_console()
         illness_controller = IllnessController(Configuration); illness_controller.update_illness(illness)
+
+    @staticmethod
+    def conduct_analysis():
+        from module.static.Configuration import Configuration
+        OutputPrinter.clear_console()
+        illness_controller = IllnessController(Configuration); illnesses = illness_controller.get_illnesses()
+        MenuFunctions.__print_illnesses_names(illnesses)
+        requested_illnesses_string = MenuFunctions.__get_illnesses()
+        requested_illnesses_list = MenuFunctions.__illnesses_string_to_list(requested_illnesses_string)
+        requested_illnesses = illness_controller.get_illnesses_from_list(requested_illnesses_list)
+        OutputPrinter.clear_console()
+        MenuFunctions.__output_analysis(requested_illnesses)
+        MenuFunctions.__await_user_input()
+        OutputPrinter.clear_console()
 
     @staticmethod
     def exit_program():

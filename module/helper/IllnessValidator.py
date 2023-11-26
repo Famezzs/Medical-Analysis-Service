@@ -17,7 +17,6 @@ class IllnessValidator(Validator):
             illness_controller = IllnessController(self.configuration)
             if illness_controller.get_illness(illness.name):
                 raise InvalidInput('Illness with this name already exists')
-            
         if validate_description_changed:
             illness_controller = IllnessController(self.configuration)
             if illness_controller.get_illness(illness.name)[0].description == illness.description:

@@ -22,7 +22,10 @@ class IllnessController(Controller):
         return self.database.query_records(Illness, Illness.name == name)
     
     def get_illnesses(self):
-        return self.database.query_records(Illness)
+        return self.database.query_records(Illness, True)
+    
+    def get_illnesses_from_list(self, illnesses: list):
+        return self.database.query_records(Illness, Illness.name.in_(illnesses))
 
     def create_illness(self, illness: Illness):
         from module.controller.AuthenticationController import AuthenticationController
