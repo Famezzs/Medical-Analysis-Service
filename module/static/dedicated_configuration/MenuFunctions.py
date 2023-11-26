@@ -34,13 +34,13 @@ class MenuFunctions:
         return login_details
     
     @staticmethod
-    def __get_illness():
+    def __get_illness(validate_not_exists = False, validate_description_changed = False):
         from module.static.Configuration import Configuration
         input_scanner = InputScanner(OutputPrinter)
         name = input_scanner.scan('Name: ')
         description = input_scanner.scan('Description: ')
         illness = Illness(); illness.name = name; illness.description = description
-        illness_validator = IllnessValidator(Configuration); illness_validator.validate(illness, True)
+        illness_validator = IllnessValidator(Configuration); illness_validator.validate(illness, validate_not_exists, validate_description_changed)
         return illness
 
     @staticmethod
@@ -69,9 +69,17 @@ class MenuFunctions:
     def create_illness():
         from module.static.Configuration import Configuration
         OutputPrinter.clear_console()
-        illness = MenuFunctions.__get_illness()
+        illness = MenuFunctions.__get_illness(True, False)
         OutputPrinter.clear_console()
         Illness_controller = IllnessController(Configuration); Illness_controller.create_illness(illness)
+
+    @staticmethod
+    def update_illness():
+        from module.static.Configuration import Configuration
+        OutputPrinter.clear_console()
+        illness = MenuFunctions.__get_illness(False, True)
+        OutputPrinter.clear_console()
+        illness_controller = IllnessController(Configuration); illness_controller.update_illness(illness)
 
     @staticmethod
     def exit_program():

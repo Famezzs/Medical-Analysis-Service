@@ -7,7 +7,7 @@ class IllnessValidator(Validator):
     def __init__(self, configuration):
         self.configuration = configuration
 
-    def validate(self, illness: Illness, validate_not_exists = False):
+    def validate(self, illness: Illness, validate_not_exists = False, validate_description_changed = False):
         from module.controller.IllnessController import IllnessController
         if InputScanner.input_empty(illness.name):
             raise InvalidInput('Name cannot be empty or whitespace')
@@ -16,4 +16,9 @@ class IllnessValidator(Validator):
         if validate_not_exists:
             illness_controller = IllnessController(self.configuration)
             if illness_controller.get_illness(illness.name):
-                raise InvalidInput('Illness with this login already exists')
+                raise InvalidInput('Illness with this name already exists')
+            
+        if validate_description_changed:
+            illness_controller = IllnessController(self.configuration)
+            if illness_controller.get_illness(illness.name)[0].description == illness.description:
+                raise InvalidInput('Description should differ')

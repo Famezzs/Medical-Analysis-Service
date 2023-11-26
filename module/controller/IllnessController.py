@@ -1,12 +1,21 @@
 from module.abstract.Controller import Controller
 from module.data.entity.Illness import Illness
 from module.helper.TypeValidator import TypeValidator
+from module.exception.InvalidInput import InvalidInput
 
 class IllnessController(Controller):
     def __init__(self, configuration):
         self.configuration = configuration
         from module.data.DatabaseEngine import DatabaseEngine
         self.database = DatabaseEngine(configuration)
+
+    def __handle_illness_not_exists():
+        raise InvalidInput('Illness specified does not exist')
+
+    def __ensure_illness_exists(self, illness: Illness):
+        TypeValidator.enforce_type(illness, Illness)
+        if not self.database.query_records(Illness, Illness.name == illness.name):
+            self.__handle_illness_not_exists()        
 
     def get_illness(self, name: str):
         TypeValidator.enforce_type(name, str)
@@ -30,4 +39,5 @@ class IllnessController(Controller):
         TypeValidator.enforce_type(updated_illness, Illness)
         AuthenticationController.ensure_authenticated()
         AuthenticationController.ensure_doctor()
-        return self.database.update_record(Illness, Illness.id == updated_illness.name or Illness.name == updated_illness.name, updated_illness)
+        self.__ensure_illness_exists(updated_illness)
+        return self.database.update_record(Illness, Illness.name == updated_illness.name, {Illness.description: updated_illness.description})
