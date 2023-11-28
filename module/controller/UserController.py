@@ -6,6 +6,7 @@ from module.data.entity.Doctor import Doctor
 from module.data.entity.LoginDetails import LoginDetails
 from module.helper.TypeValidator import TypeValidator
 
+# Class which is used for providing CRUD operations over user entity records
 class UserController(Controller):
     def __init__(self, configuration):
         self.configuration = configuration

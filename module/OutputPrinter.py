@@ -2,6 +2,7 @@ import os
 from module.abstract.ClearsConsole import ClearsConsole
 from termcolor import colored
 
+# Class which implements the printing functionality used by application
 class OutputPrinter(ClearsConsole):
     @staticmethod
     def print(output_string, additional_next_line=False, no_new_line=False):

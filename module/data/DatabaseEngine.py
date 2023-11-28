@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from module.static.Configuration import Configuration
 
+# Class which is used for providing CRUD operations over all entity records
 class DatabaseEngine:
     def __init__(self, configuration: Configuration):
         self.engine = create_engine(configuration.database_configuration.connection_string)

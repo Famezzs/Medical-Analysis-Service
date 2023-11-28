@@ -2,6 +2,7 @@ from module.InputScanner import InputScanner
 from module.OutputPrinter import OutputPrinter
 from module.static.dedicated_configuration.MenuFunctions import MenuFunctions
 
+# Class which specifies how the Menu class instance should behave
 class MenuConfiguration:
     options_and_functions = {
         '1': MenuFunctions.register,

@@ -13,6 +13,7 @@ from module.controller.IllnessController import IllnessController
 from datetime import datetime
 import getpass
 
+# Class which stores the functions called by the Menu class instance
 class MenuFunctions:
     @staticmethod
     def __get_user():

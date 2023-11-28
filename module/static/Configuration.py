@@ -3,6 +3,7 @@ from module.static.dedicated_configuration.ExceptionHandlerConfiguration import 
 from module.static.dedicated_configuration.MenuConfiguration import MenuConfiguration
 from module.static.dedicated_configuration.AuthenticationConfiguration import AuthenticationConfiguration
 
+# Class which stores the application's configuration
 class Configuration:
     database_configuration = DatabaseConfiguration
     exception_handler_configuration = ExceptionHandlerConfiguration

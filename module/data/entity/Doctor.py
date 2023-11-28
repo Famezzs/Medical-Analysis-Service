@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from module.static.dedicated_configuration.EntityConfiguration import EntityConfiguration
 
+# Class which represents doctors table
 class Doctor(EntityConfiguration.base):
     __tablename__ = 'doctors'
 

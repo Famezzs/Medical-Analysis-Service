@@ -3,6 +3,8 @@ from module.data.entity.Illness import Illness
 from module.InputScanner import InputScanner
 from module.exception.InvalidInput import InvalidInput
 
+# Class which implements the validator pattern and is used
+# for validating illness entity input
 class IllnessValidator(Validator):
     def __init__(self, configuration):
         self.configuration = configuration

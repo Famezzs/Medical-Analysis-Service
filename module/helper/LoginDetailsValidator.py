@@ -4,6 +4,8 @@ from module.InputScanner import InputScanner
 from module.exception.InvalidInput import InvalidInput
 import re
 
+# Class which implements the validator pattern and is used
+# for validating login details entity input
 class LoginDetailsValidator(Validator):
     def __init__(self, configuration):
         self.configuration = configuration

@@ -1,6 +1,7 @@
 from module.abstract.ClearsConsole import ClearsConsole
 from module.exception.InvalidOption import InvalidOption
 
+# Class which is used for rendering the appliaction's menu
 class Menu(ClearsConsole):
     def __init__(self, configuration):
         self.options_and_descriptions = configuration.menu_configuration.options_and_descriptions

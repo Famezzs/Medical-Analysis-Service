@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.orm import relationship
 from module.static.dedicated_configuration.EntityConfiguration import EntityConfiguration
 
+# Class which represents users table
 class User(EntityConfiguration.base):
     __tablename__ = 'users'
     

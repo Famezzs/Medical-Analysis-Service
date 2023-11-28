@@ -1,3 +1,5 @@
+# Class which implements the validator pattern and is used
+# for validating entity type
 class TypeValidator:
     @staticmethod
     def enforce_type(actual_type, expected_type):

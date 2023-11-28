@@ -1,3 +1,4 @@
+# Class which used used for exception handling
 class ExceptionHandler:
     def __init__(self, configuration):
         self.printer = configuration.exception_handler_configuration.printer

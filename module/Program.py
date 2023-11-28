@@ -2,6 +2,7 @@ from module.Menu import Menu
 from module.exception.ExceptionHandler import ExceptionHandler
 from module.static.Configuration import Configuration
 
+# Function which implements the runtime program
 class Program:
     def run(self):        
         menu = Menu(Configuration)

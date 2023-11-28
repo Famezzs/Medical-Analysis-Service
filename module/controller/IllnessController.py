@@ -3,6 +3,7 @@ from module.data.entity.Illness import Illness
 from module.helper.TypeValidator import TypeValidator
 from module.exception.InvalidInput import InvalidInput
 
+# Class which is used for providing CRUD operations over illness entity records
 class IllnessController(Controller):
     def __init__(self, configuration):
         self.configuration = configuration

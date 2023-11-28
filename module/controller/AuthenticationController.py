@@ -5,6 +5,7 @@ from module.data.entity.LoginDetails import LoginDetails
 from module.exception.LoginFailed import LoginFailed
 import bcrypt
 
+# Class which is used for authenticating/authorizing application users
 class AuthenticationController(Controller):
     __current_session = None
     __is_doctor = False

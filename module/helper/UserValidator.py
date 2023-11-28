@@ -6,6 +6,8 @@ from module.exception.EmptyInput import EmptyInput
 from module.exception.InvalidInput import InvalidInput
 from datetime import datetime
 
+# Class which implements the validator pattern and is used
+# for validating user entity input
 class UserValidator(Validator):
     def validate(self, user: User):
         if InputScanner.input_empty(user.name):

@@ -1,5 +1,6 @@
 from module.exception.EmptyInput import EmptyInput
 
+# Class which implements the input functionality of the application
 class InputScanner():
     def __init__(self, printer):
         self.printer = printer
