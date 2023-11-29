@@ -1,3 +1,3 @@
 # Medical-Analysis-Service
-A simple implementation of a medical analysis information system service. A simple console-based application 
-which uses Controller model for handling user interaction
+A basic implementation of a medical analysis information system service. This is achieved by providing
+a simple console-based application which uses Controller model for handling various user interaction
