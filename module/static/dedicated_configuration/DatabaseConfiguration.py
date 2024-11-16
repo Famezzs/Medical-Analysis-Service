@@ -8,6 +8,6 @@ from module.OutputPrinter import OutputPrinter
 
 # Class which specifies how the DatabaseEngine class instance should behave
 class DatabaseConfiguration:
-    connection_string = 'mssql+pyodbc://localhost\\SQLEXPRESS01/master?driver=ODBC Driver 17 for SQL Server&trusted_connection=yes'
+    connection_string = os.environ.get("DB_CONNECTION")
     entities = [User, Patient, Doctor, LoginDetails, Illness]
     printer = OutputPrinter

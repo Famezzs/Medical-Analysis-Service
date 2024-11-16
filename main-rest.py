@@ -3,7 +3,7 @@ from module.controller.UserController import UserController
 from module.controller.AuthenticationController import AuthenticationController
 from module.controller.IllnessController import IllnessController
 from module.static.Configuration import Configuration
-from module.helper.IllnessesToArray import IllnessesToArray
+from module.helper.IllnessesToArrayConverter import IllnessesToArrayConverter
 
 app = Flask(__name__)
 
@@ -49,7 +49,8 @@ def conduct_analysis():
         json_data = request.get_json()
         illness_controller = IllnessController(Configuration)
         requested_illnesses = illness_controller.get_illnesses_from_list(json_data.get('illnesses_list'))
-        return jsonify({"analysis": IllnessesToArray.convert_list(requested_illnesses)}), 200
+        illness_to_array_converter = IllnessesToArrayConverter()
+        return jsonify({"analysis": illness_to_array_converter.convert(requested_illnesses)}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
@@ -58,7 +59,8 @@ def conduct_analysis():
 def get_illnesses():
     try:
         illness_controller = IllnessController(Configuration); illnesses = illness_controller.get_illnesses()
-        return jsonify({"illnesses": IllnessesToArray.convert_list(illnesses)}), 200
+        illness_to_array_converter = IllnessesToArrayConverter()
+        return jsonify({"illnesses": illness_to_array_converter.convert(illnesses)}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 

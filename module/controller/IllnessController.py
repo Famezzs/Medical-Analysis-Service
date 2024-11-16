@@ -15,7 +15,7 @@ class IllnessController(Controller):
         raise InvalidInput('Illness specified does not exist')
 
     def __ensure_illness_exists(self, illness: Illness):
-        TypeValidator.enforce_type(illness, Illness)
+        type_validator = TypeValidator(); type_validator.validate(illness, Illness)
         if not self.database.query_records(Illness, Illness.name == illness.name):
             self.__handle_illness_not_exists()        
 
@@ -28,7 +28,7 @@ class IllnessController(Controller):
         return illness
 
     def get_illness(self, name: str):
-        TypeValidator.enforce_type(name, str)
+        type_validator = TypeValidator(); type_validator.validate(name, str)
         return self.database.query_records(Illness, Illness.name == name)
     
     def get_illnesses(self):
@@ -41,7 +41,7 @@ class IllnessController(Controller):
         from module.controller.AuthenticationController import AuthenticationController
         from module.controller.UserController import UserController
         from module.static.Configuration import Configuration
-        TypeValidator.enforce_type(illness, Illness)
+        type_validator = TypeValidator(); type_validator.validate(illness, Illness)
         AuthenticationController.ensure_authenticated()
         AuthenticationController.ensure_doctor()
         user_controller = UserController(Configuration); illness.creator_doctor_id = user_controller.get_doctor(AuthenticationController.get_current_session().user_id)[0].id
@@ -49,7 +49,7 @@ class IllnessController(Controller):
     
     def update_illness(self, updated_illness: Illness):
         from module.controller.AuthenticationController import AuthenticationController
-        TypeValidator.enforce_type(updated_illness, Illness)
+        type_validator = TypeValidator(); type_validator.validate(updated_illness, Illness)
         AuthenticationController.ensure_authenticated()
         AuthenticationController.ensure_doctor()
         self.__ensure_illness_exists(updated_illness)

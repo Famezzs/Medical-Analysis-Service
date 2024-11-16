@@ -25,21 +25,21 @@ class UserController(Controller):
         return user
 
     def create_user(self, user: User):
-        TypeValidator.enforce_type(user, User)
+        type_validator = TypeValidator(); type_validator.validate(user, User)
         return self.database.add_record(user)
 
     def create_patient(self, patient: Patient):
-        TypeValidator.enforce_type(patient, Patient)
+        type_validator = TypeValidator(); type_validator.validate(patient, Patient)
         self.database.add_record(patient)
 
     def get_login_details(self, login: str):
-        TypeValidator.enforce_type(login, str)
+        type_validator = TypeValidator(); type_validator.validate(login, str)
         return self.database.query_records(LoginDetails, filter_condition=(LoginDetails.login == login))
     
     def create_login_details(self, login_details: LoginDetails):
-        TypeValidator.enforce_type(login_details, LoginDetails)
+        type_validator = TypeValidator(); type_validator.validate(login_details, LoginDetails)
         self.database.add_record(login_details)
 
     def get_doctor(self, user_id: int):
-        TypeValidator.enforce_type(user_id, int)
+        type_validator = TypeValidator(); type_validator.validate(user_id, int)
         return self.database.query_records(Doctor, Doctor.user_id == user_id)

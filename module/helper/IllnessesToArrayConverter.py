@@ -1,10 +1,10 @@
 from module.data.entity.Illness import Illness
+from module.abstract.Converter import Converter
 
-class IllnessesToArray():
-    @staticmethod
-    def convert_list(illnesses_list):
+class IllnessesToArrayConverter(Converter):
+    def convert(self, to_convert):
         illnesses_array = []
-        for illness in illnesses_list:
+        for illness in to_convert:
             illnesses_array.append({
                 "name": illness.name,
                 "description": illness.description
