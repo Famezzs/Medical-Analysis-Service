@@ -5,12 +5,24 @@ from module.data.entity.Patient import Patient
 from module.data.entity.Doctor import Doctor
 from module.data.entity.LoginDetails import LoginDetails
 from module.helper.TypeValidator import TypeValidator
+from module.helper.UserValidator import UserValidator
 
 # Class which is used for providing CRUD operations over user entity records
 class UserController(Controller):
     def __init__(self, configuration):
         self.configuration = configuration
         self.database = DatabaseEngine(configuration)
+
+    @staticmethod
+    def parse_json_user(user_json_data):
+        from datetime import datetime
+        user = User(
+            name=user_json_data.get('name'),
+            birthday=datetime.strptime(user_json_data.get('birthday'), '%Y-%m-%d').date(),
+            sex=user_json_data.get('sex')
+        )
+        user_validator = UserValidator(); user_validator.validate(user)
+        return user
 
     def create_user(self, user: User):
         TypeValidator.enforce_type(user, User)

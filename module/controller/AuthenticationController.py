@@ -3,6 +3,7 @@ from module.exception.Unauthorized import Unauthorized
 from module.data.entity.User import User
 from module.data.entity.LoginDetails import LoginDetails
 from module.exception.LoginFailed import LoginFailed
+from module.helper.LoginDetailsValidator import LoginDetailsValidator
 import bcrypt
 
 # Class which is used for authenticating/authorizing application users
@@ -41,6 +42,14 @@ class AuthenticationController(Controller):
         match = self.__check_password(stored_login_details.password, provided_login_details.password)
         if match == False:
             raise LoginFailed('Login failed')
+
+    def parse_json_login_details(self, login_details_json_data, validate_not_exists = False):
+        login_details = LoginDetails(
+            login=login_details_json_data.get('login'),
+            password=login_details_json_data.get('password')
+        )
+        login_details_validator = LoginDetailsValidator(self.configuration); login_details_validator.validate(login_details, validate_not_exists)
+        return login_details
 
     @staticmethod    
     def __determine_is_doctor():

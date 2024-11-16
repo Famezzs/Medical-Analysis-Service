@@ -2,6 +2,7 @@ from module.abstract.Controller import Controller
 from module.data.entity.Illness import Illness
 from module.helper.TypeValidator import TypeValidator
 from module.exception.InvalidInput import InvalidInput
+from module.helper.IllnessValidator import IllnessValidator
 
 # Class which is used for providing CRUD operations over illness entity records
 class IllnessController(Controller):
@@ -17,6 +18,14 @@ class IllnessController(Controller):
         TypeValidator.enforce_type(illness, Illness)
         if not self.database.query_records(Illness, Illness.name == illness.name):
             self.__handle_illness_not_exists()        
+
+    def parse_json_illness(self, illness_json_data, validate_not_exists = False, validate_description_changed = False):
+        illness = Illness(
+            name=illness_json_data.get('name'),
+            description=illness_json_data.get('description')
+        )
+        illness_validator = IllnessValidator(self.configuration); illness_validator.validate(illness, validate_not_exists, validate_description_changed)
+        return illness
 
     def get_illness(self, name: str):
         TypeValidator.enforce_type(name, str)
